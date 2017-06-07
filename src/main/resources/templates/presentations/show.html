@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Hello Spring Boot!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.2.1/jquery.min.js"
+            th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+</head>
+<body>
+<!-- Insert content into the layouts/layout.html -->
+<th:block layout:fragment="content">
+    <table class="table">
+        <tr>
+            <th>Доклад</th>
+            <th>Докладчики</th>
+            <th>Начало доклада</th>
+            <th>Длительность мин.</th>
+            <th>Номер аудитории</th>
+            <th>Действие</th>
+        </tr>
+        <th:block th:each="schedule : ${schedules}">
+            <tr>
+                <td th:text="${schedule.presentation.title}">...</td>
+                <td>
+                    <th:block th:each="user, iterStat : ${schedule.presentation.presenters}">
+                        <span th:text="${iterStat.last} ? ${user.username} : ${user.username} + ','"></span>
+                    </th:block>
+                </td>
+                <td th:text="${{schedule.eventTime}}">...</td>
+                <td th:text="${schedule.eventDurationMin}">...</td>
+                <td th:text="${schedule.room.roomNumber}">...</td>
+                <td>
+                    <a class="editPresentation btn btn-default" th:href="@{/presentations/edit/{id}(id=${schedule.id})}">
+                        <i class="fa fa-edit"></i></a>
+                    <a class="deletePresentation btn btn-danger" href="#" th:data-id="${schedule.id}">
+                        <i class="fa fa-times"></i></a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+    <a th:href="@{/presentations/add/}" class="btn btn-default">Добавить</a>
+</th:block>
+</body>
+</html>

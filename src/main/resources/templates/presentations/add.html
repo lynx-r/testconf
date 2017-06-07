@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Hello Spring Boot!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.2.1/jquery.min.js"
+            th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+</head>
+<body>
+<!-- Insert content into the layouts/layout.html -->
+<th:block layout:fragment="content">
+    <form th:action="@{/presentations/edit}" th:object="${schedule}" class="col-md-offset-4 col-md-4" method="POST"
+          enctype="utf8">
+        <div>
+            <label th:text="Заголовок" class="control-label">first</label>
+            <input th:field="*{presentation.title}" class="form-control"/>
+            <p th:each="error: ${#fields.errors('presentation.title')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Аудитория" class="control-label">first</label>
+            <select th:field="*{room.id}" class="form-control">
+                <option th:each="room : ${rooms}"
+                        th:value="${room.id}"
+                        th:text="${room.roomNumber}"></option>
+            </select>
+            <p th:each="error: ${#fields.errors('room.id')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="'Время (17/09/20 10:00)'" class="control-label">last</label>
+            <input th:field="*{eventTime}" class="form-control"/>
+            <p th:each="error : ${#fields.errors('eventTime')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="'Длительность мин.'" class="control-label">last</label>
+            <input th:field="*{eventDurationMin}" class="form-control"/>
+            <p th:each="error : ${#fields.errors('eventDurationMin')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div class="btn-group pull-right">
+            <a th:href="@{/presentations/show}" class="btn btn-default">Назад</a>
+            <button type="submit" th:text="Сохранить" class="btn btn-primary">submit</button>
+        </div>
+    </form>
+</th:block>
+</body>
+</html>

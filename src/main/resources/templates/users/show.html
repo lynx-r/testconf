@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Hello Spring Boot!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.2.1/jquery.min.js"
+            th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+</head>
+<body>
+<!-- Insert content into the layouts/layout.html -->
+<th:block layout:fragment="content">
+    <table class="table">
+        <tr>
+            <th>Логин</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Роль</th>
+            <th>Действие</th>
+        </tr>
+        <th:block th:each="user : ${users.content}">
+            <tr>
+                <td th:text="${user.username}">...</td>
+                <td th:text="${user.firstName}" class="editName">Имя</td>
+                <td class="editName">
+                    <div th:id="'userLastName_' + ${user.id}" th:text="${user.lastName}" th:data-field="lastName">
+                        Фамилия
+                    </div>
+                </td>
+                <td th:text="${user.role.getDisplayName()}">...</td>
+                <td th:if="${user.role.name() ne 'ROLE_ADMIN'}">
+                    <a class="editUser btn btn-default" th:href="@{/users/edit/{id}(id=${user.id})}">
+                        <i class="fa fa-edit"></i></a>
+                    <a class="deleteUser btn btn-danger" href="#" th:data-id="${user.id}">
+                        <i class="fa fa-times"></i></a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+    <a th:href="@{/users/add/}" class="btn btn-default">Зарегистрировать</a>
+</th:block>
+</body>
+</html>

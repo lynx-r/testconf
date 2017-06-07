@@ -1,0 +1,33 @@
+spring:
+  profiles.active: dev
+
+  thymeleaf.cache: false
+
+  resources.cache-period: 0
+
+  datasource:
+    url: @jdbc.url@
+    driver-class-name: @jdbc.driver@
+    username: @jdbc.user@
+    password: @jdbc.password@
+
+#  h2.console.enabled: true
+#  h2.console.settings.web-allow-others: true
+
+  jpa.show-sql: true
+  jpa.generate-ddl: false
+  jpa.hibernate.ddl-auto: none
+
+logging.level:
+  org.springframework.web.filter.CommonsRequestLoggingFilter: trace
+  org.hibernate:
+    SQLQuery: trace
+    type: trace
+    type.descriptor.sql: trace
+  org.springframwork.security: DEBUG
+
+h2:
+  tcp.enabled: true
+  tcp.port: 9092
+  web.enabled: false
+  web.port: 8082

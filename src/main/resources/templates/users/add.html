@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Hello Spring Boot!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.2.1/jquery.min.js"
+            th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+</head>
+<body>
+<!-- Insert content into the layouts/layout.html -->
+<th:block layout:fragment="content">
+    <form th:action="@{/users/edit}" th:object="${user}" class="col-md-offset-4 col-md-4" method="POST" enctype="utf8">
+        <div>
+            <label th:text="Логин" class="control-label">first</label>
+            <input th:field="*{username}" class="form-control"/>
+            <p th:each="error: ${#fields.errors('username')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Имя" class="control-label">first</label>
+            <input th:field="*{firstName}" class="form-control"/>
+            <p th:each="error: ${#fields.errors('firstName')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Фамилия" class="control-label">last</label>
+            <input th:field="*{lastName}" class="form-control"/>
+            <p th:each="error : ${#fields.errors('lastName')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Пароль" class="control-label">last</label>
+            <input th:field="*{password}" class="form-control"/>
+            <p th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Роль" class="control-label">last</label>
+            <select th:field="*{role}" class="form-control">
+                <option th:value="'ROLE_LISTENER'" th:attr="selected=${user.role.name() eq 'ROLE_LISTENER' ? 'selected' : null}">Слушатель</option>
+                <option th:value="'ROLE_PRESENTER'" th:attr="selected=${user.role.name() eq 'ROLE_PRESENTER' ? 'selected' : null}">Докладчик</option>
+            </select>
+        </div>
+        <div class="btn-group pull-right">
+            <a th:href="@{/users/show}" class="btn btn-default">Назад</a>
+            <button type="submit" th:text="Сохранить" class="btn btn-primary">submit</button>
+        </div>
+    </form>
+</th:block>
+</body>
+</html>

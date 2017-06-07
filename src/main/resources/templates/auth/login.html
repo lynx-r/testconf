@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
+<head>
+    <title>Hello Spring Boot!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="../static/css/core.css" th:href="@{/css/core.css}" rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.2.1/jquery.min.js" th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
+</head>
+<body>
+<!-- Insert content into the layouts/layout.html -->
+<th:block layout:fragment="content">
+    <form th:action="@{/login}" method="post" class="col-md-offset-4 col-md-4">
+        <div th:if="${param.error}">
+            Неверное имя пользователя или пароль
+        </div>
+        <div th:if="${param.logout}">
+            Вы уже вышли
+        </div>
+        <div><label class="control-label"> Логин:</label>
+            <input type="text" name="username" class="form-control"/>
+        </div>
+        <div>
+            <label class="control-label"> Пароль: </label>
+            <input type="password" name="password" class="form-control"/>
+        </div>
+        <div>
+            <input type="submit" value="Войти" class="btn btn-primary pull-right"/>
+        </div>
+    </form>
+</th:block>
+</body>
+</html>
